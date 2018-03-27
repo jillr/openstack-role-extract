@@ -26,9 +26,18 @@ if __name__ == "__main__":
     data = yaml_load(filepath)
     # print(data)
 
-    d = data.get("outputs")
-    for item_name, item_value in d.items():
-        print("{} = {}".format(item_name, item_value))
+    outputs_data = data.get("outputs")
+    # for k, v in outputs_data.items():
+        # print("{} = {}".format(k, v))
+
+    role_data = outputs_data.get("role_data")
+    # for k, v in role_data.items():
+        # print("{} = {}".format(k, v))
+
+    upgrade_tasks_data = role_data.get("upgrade_tasks")
+    for k, v in upgrade_tasks_data.items():
+        print("{} = {}".format(k, v))
+
 
 
 """
