@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import yaml
+import pprint
+
 from optparse import OptionParser
 
 parser = OptionParser("usage: %prog -f --file filename")
@@ -21,23 +23,21 @@ def yaml_dump(filepath):
     with open(filepath, "w") as file_descriptor:
         yaml.dump(data, file_descriptor)
 
+pp = pprint.PrettyPrinter(width=76)
+
 if __name__ == "__main__":
     filepath = options.filename
     data = yaml_load(filepath)
-    # print(data)
 
     outputs_data = data.get("outputs")
-    # for k, v in outputs_data.items():
-        # print("{} = {}".format(k, v))
 
     role_data = outputs_data.get("role_data")
-    # for k, v in role_data.items():
-        # print("{} = {}".format(k, v))
 
-    upgrade_tasks_data = role_data.get("upgrade_tasks")
-    for k, v in upgrade_tasks_data.items():
-        print("{} = {}".format(k, v))
-
+    role_values = role_data.get("value")
+    upgrade_tasks_data = role_values.get("upgrade_tasks")
+    print(type(upgrade_tasks_data))
+    for i in upgrade_tasks_data:
+        print(i.items())
 
 
 """
@@ -45,9 +45,10 @@ Example format of yaml to be extracted as follows
 
 outputs:
     role_data:
-        upgrade_tasks:
-        .
-        .
-        .
-        fast_forward_upgrade_tasks:
+        value:
+            upgrade_tasks:
+            .
+            .
+            .
+            fast_forward_upgrade_tasks:
 """
